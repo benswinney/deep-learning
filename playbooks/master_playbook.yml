@@ -1,0 +1,27 @@
+---
+# Copyright 2016, IBM US, Inc.
+#
+#gpudb playbook:  Install latest nvidia driver for gpudb.
+# eventually there will be more involved steps, however,
+# for gpudb's initial purposes, they just need a local
+# install of the latest nvidia kernel drivers.
+#
+- name: Gather facts from localhost
+  hosts: localhost
+  gather_facts: yes
+
+- name: Install cuda
+  hosts: deeplearning
+  tasks:
+    - include: tasks/install_nvidia.yml
+  become: true
+
+
+- name: Install Frameworks 
+  hosts: deeplearning
+  tasks:
+    - name: Framework Install 
+      include: framework_install.yml
+  become: true
+
+

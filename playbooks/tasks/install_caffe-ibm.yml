@@ -1,0 +1,7 @@
+---
+# Copyright 2016, IBM US, Inc.
+#
+#gpudb tasks:  
+#
+- name: Install caffe-ibm 
+  shell: apt-get install -y caffe-ibm

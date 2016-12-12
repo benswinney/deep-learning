@@ -1,0 +1,18 @@
+---
+# Copyright 2016, IBM US, Inc.
+#
+#gpudb tasks:  
+#
+- name: Install openblas dependencies
+  shell: apt-get install -y {{ item }}
+  with_items: "{{ reference_architecture['nvidia_playbook']['openblas_deps'] }}"
+  become: true
+  ignore_errors: yes
+
+- name: Copy openblas deb
+  copy: src="{{ reference_architecture['nvidia_playbook']['openblas_deb'] }}" dest="/tmp/openblas.deb"
+
+- name: Install openblas
+  shell: dpkg -i /tmp/openblas.deb
+  
+...

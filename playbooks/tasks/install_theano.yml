@@ -1,0 +1,7 @@
+---
+# Copyright 2016, IBM US, Inc.
+#
+#gpudb tasks:  
+#
+- name: Install theano
+  shell: apt-get install -y theano
