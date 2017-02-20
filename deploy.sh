@@ -1,5 +1,5 @@
 #execute deployer
-ACTIVATE_FILE=".accel-activate"
+ACTIVATE_FILE=".activate"
 PLAYBOOK_LOC="playbooks/nvidia_driver.yml"
 SETUP_ENV_LOC="scripts/setup-env"
 if [ ! -f $ACTIVATE_FILE ];
