@@ -13,7 +13,7 @@ source ${ACTIVATE_FILE}
 cp $1 playbooks/powerai-inventory.yml
 cd playbooks 
 #ansible-playbook -i $DYNAMIC_INVENTORY $PLAYBOOK_LOC -u root --private=~/.ssh/id_rsa_ansible-generated
-ansible-playbook master_playbook.yml -i ../inventory.py -K
+ansible-playbook master_playbook.yml -i ../inventory.py -u root --private=~/.ssh/id_rsa_ansible-generated
  
 fi
 fi

@@ -1,0 +1,31 @@
+---
+# Copyright 2016, IBM US, Inc.
+#
+#gpudb playbook:  Install latest nvidia driver for gpudb.
+# eventually there will be more involved steps, however,
+# for gpudb's initial purposes, they just need a local
+# install of the latest nvidia kernel drivers.
+#
+#- name: Including caffe-nv playbook 
+#  include: caffe-nv_install.yml
+#  when: (framework == 'caffe-nv')
+#  become: true
+#- name: Install openBlas driver
+#  include: tasks/install_openblas.yml
+#  when: "{{ 'caffe-nv' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+
+#- name: Install ccl driver
+#  include: tasks/install_ccl.yml
+#  when: "{{ 'caffe-nv' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+- name: ensure tensorflow samples dir exists 
+  file: path=/opt/DL/tensorflow/samples state=directory
+
+- name: copy mnist master file
+  copy: 
+    src: "{{ reference_architecture['powerai_playbook']['mnist_test_src'] }}"
+    dest: "{{ reference_architecture['powerai_playbook']['mnist_test_dest'] }}"
+    mode: 0777
+
+- name: tensorflow
+  include: tasks/create_dist_driver.yml
+  become: true

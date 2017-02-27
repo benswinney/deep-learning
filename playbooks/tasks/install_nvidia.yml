@@ -37,7 +37,7 @@
 
 #install nvidia kernel driver only, leave the rest of cuda alone.
 - name: install cuda driver
-  shell: "apt-get install -y cuda "
+  shell: "apt-get install --allow-unauthenticated -y cuda "
 
 # Install the cudnn5 libraries
 - name: Install cudnn libraries

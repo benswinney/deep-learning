@@ -1,68 +1,24 @@
 reference-architecture:
     gpudb_nvidia_playbook:
         description: playbook for installing nvidia for gpudb
-        cuda_deb: "packages/cuda8.deb"
+        cuda_deb: packages/cuda8.deb
         cudnn5_deb: "packages/cudnn5.deb"
         cudnn5_dev_deb: "packages/cudnn5_dev.deb"
-        driver_level: "nvidia-361"
-        dkms_deb: "packages/dkms.deb"
+        driver_level: nvidia-361
+        dkms_deb: packages/dkms.deb
+
     powerai_playbook:
         description: Playbook for installing Power machine learning frameworks
         mldl_deb: "packages/mldl.deb"
+        mnist_test_src: "static/tensorflow/distributed/samples/mnist/mnist_dist.py"
+        mnist_test_dest: "/opt/DL/tensorflow/samples/mnist_dist.py"
 
 
-switches:
-    mgmt:
-    -   hostname: mgmtswitch1
-        ipv4-addr: 192.168.0.5
-        rack-id: rack1
-        userid: admin
-        password: admin
-    data:
-    -   hostname: dataswitch1
-        ipv4-addr: 9.3.89.24
-        rack-id: rack1
-        userid: admin
-        password: admin
-nodes:
-    deeplearning:
-    -   hostname: deeplearning-1
-        powerai-frameworks: 
-        - caffe-nv
-        - caffe-bvlc
-        - caffe-ibm
-        - digits
-        userid-ipmi: ADMIN
-        password-ipmi: ADMIN
-        port-ipmi: 5
-        port-pxe: 6
-        port-eth10: 35
-        port-eth11: 59/2
-        mac-ipmi: 0c:c4:7a:4d:86:aa
-        ipv4-ipmi: 192.168.0.101
-        mac-pxe: 14:63:08:00:16:b3
-        ipv4-pxe: 172.17.0.7
-        rack-id: rack1
-        template: compute
-        chassis-part-number: CSE-938BH-R1620BP
-        chassis-serial-number: C9380AE15AH0247
-        model: SYS-5038ML-H8TRF
-        serial-number: S13656825718481
-        external0-addr: 9.3.102.13
-        external1-addr: ''
-        external2-addr: ''
-        mac-eth10: 7c:fe:90:a5:36:10
-        mac-eth11: 7c:fe:90:a5:36:20
-        bond0-addr: 192.168.1.3
-
-
-
-
-ipaddr-mgmt-network: 192.168.0.0/24
+ipaddr-mgmt-network: 192.168.3.0/24
 ipaddr-mgmt-switch:
-    rack1: 192.168.0.5
+    rack1: 192.168.3.5
 ipaddr-data-switch:
-    rack1: 9.3.89.24
+    rack1: 9.3.3.178
 redundant-network: false
 userid-default: ubuntu
 password-default: passw0rd
@@ -70,128 +26,172 @@ userid-mgmt-switch: admin
 password-mgmt-switch: admin
 userid-data-switch: admin
 password-data-switch: admin
-internal-floating-ipaddr: 9.3.89.55
-external-floating-ipaddr: 9.3.89.56
 networks:
-    external0:
+    external:
         description: Organization site or external network
-        addr: 9.3.102.0/24
-        broadcast: 9.3.102.255
-        gateway: 9.3.102.1
+        addr: 9.3.3.0/24
+        broadcast: 9.3.3.255
+        gateway: 9.3.3.1
         dns-nameservers: 9.3.1.200
         dns-search: aus.stglabs.ibm.com
         method: static
+        eth-port: eth10
+    interconnect:
+        description: Private 10G Data Network to Interconnect Cluster
+        addr: 10.0.0.0/24
+        broadcast: 10.0.0.255
+        method: static
+        eth-port: eth11
+    mgmt-pxe:
+        description: Management Network
+        method: dhcp
         eth-port: eth15
-    external1:
-        description: Interface for eth10
-        method: manual
-        eth-port: eth10
-    external2:
-        description: Interface for eth11
-        method: manual
-        eth-port: eth11
-
-    bond0:
-        description: Multilink bond
-        bond: mybond1
-        addr: 192.168.1.0/24
-        broadcast: 192.168.1.255
-        method: static
-        mtu: 9000
-        #name of physical interfaces to bond together.
-        bond-interfaces:
-            - eth10
-            - eth11
-        #if necessary not all bond modes support a primary slave
-        bond-primary: eth10
-        #bond-mode, needs to be one of 7 types
-        # either name or number can be used.
-        #0 balance-rr
-        #1 active-backup
-        #2 balance-xor
-        #3 broadcast
-        #4 802.3ad
-        #5 balance-tlb
-        #6 balance-alb
-        #bond-mode: active-backup
-        bond-mode: 4
-        #there is a long list of optional bond arguments.
-        #Specify them here and they will be added to end of bond definition
-        optional-bond-arguments:
-            bond-miimon: 100
-            bond-lacp-rate: 1
-            bond-xmit_hash_policy: layer3+4
-
-    openstack-mgmt:
-        description: OpenStack Management Network
-        bridge: br-mgmt
-        method: static
-        tcp_segmentation_offload: false
-        addr: 172.29.236.0/22
-        vlan: 210
-        eth-port: eth10
-        mtu: 8000
-    openstack-stg:
-        description: OpenStack Management Network
-        bridge: br-storage
-        method: static
-        tcp_segmentation_offload: false
-        addr: 172.29.244.0/22
-        vlan: 220
-        eth-port: eth10
-    openstack-tenant-vxlan:
-        description: OpenStack Tenant vxlan Network
-        bridge: br-vxlan
-        method: static
-        addr: 172.29.240.0/22
-        vlan: 230
-        eth-port: eth11
-    openstack-tenant-vlan:
-        description: OpenStack Tenant vlan Network
-        bridge: br-vlan
-        method: static
-        addr: 0.0.0.0/1
-        eth-port: eth11
-    test-bridge-veth:
-        description: Test out eth12 veth pairing
-        bridge: br-vlan
-        method: static
-        bridge-port: veth12
-        eth-port: eth12
-    ceph-replication:
-        description: Ceph Replication vlan Network
-        addr: 172.29.248.0/22
-        bridge: br-replication
-        method: static
-        vlan: 240
-        eth-port: eth11
-
 node-templates:
-    compute:
-        hostname: compute
+    parameter:
+        hostname: min
         userid-ipmi: ADMIN
         password-ipmi: admin
-        cobbler-profile: ubuntu-14.04.4-server-ppc64el
-        os-disk: /dev/sdl
+        cobbler-profile: ubuntu-16.04.1-server-ppc64el
+        os-disk:
+        - /dev/sdj
+        - /dev/sdi
         name-interfaces:
             mac-pxe: eth15
             mac-eth10: eth10
             mac-eth11: eth11
         ports:
+            ipmi:
+                rack1:
+                - 11
             pxe:
                 rack1:
                 - 12
+            eth10:
+                rack1:
+                - 7
+            eth11:
+                rack1:
+                - 8
+        networks:
+        - external
+        - interconnect
+        - mgmt-pxe
+        - mgmt-pxe
+    worker:
+        hostname: min
+        userid-ipmi: ADMIN
+        password-ipmi: admin
+        cobbler-profile: ubuntu-16.04.1-server-ppc64el
+        os-disk:
+        - /dev/sdj
+        - /dev/sdi
+        name-interfaces:
+            mac-pxe: eth15
+            mac-eth10: eth10
+            mac-eth11: eth11
+        ports:
             ipmi:
                 rack1:
+                - 7
+                - 9
+            pxe:
+                rack1:
+                - 8
                 - 10
             eth10:
                 rack1:
-                - 10
+                - 3
+                - 5
             eth11:
                 rack1:
-                - 27
+                - 4
+                - 6
         networks:
-        - external0
-        - external1
-        - external2
-        - bond0
+        - external
+        - interconnect
+        - mgmt-pxe
+        - mgmt-pxe
+nodes:
+    worker:
+    -   hostname: min-1
+        powerai-frameworks:
+        - tensorflow
+        userid-ipmi: ADMIN
+        password-ipmi: admin
+        port-ipmi: 7
+        port-pxe: 8
+        port-eth10: 3
+        port-eth11: 4
+        mac-ipmi: 70:e2:84:14:1a:29
+        ipv4-ipmi: 192.168.3.101
+        rack-id: rack1
+        template: worker
+        mac-pxe: 70:e2:84:14:1a:2b
+        ipv4-pxe: 192.168.3.102
+        architecture: ppc64
+        chassis-part-number: 8335-GTB
+        chassis-serial-number: 10109EA
+        external-addr: 9.3.3.2
+        interconnect-addr: 10.0.0.1
+        mac-eth10: 98:be:94:68:af:84
+        mac-eth11: 98:be:94:68:af:85
+    -   hostname: min-2
+        powerai-frameworks:
+        - tensorflow
+        userid-ipmi: ADMIN
+        password-ipmi: admin
+        port-ipmi: 9
+        port-pxe: 10
+        port-eth10: 5
+        port-eth11: 6
+        mac-ipmi: 70:e2:84:14:0a:10
+        ipv4-ipmi: 192.168.3.103
+        rack-id: rack1
+        template: worker
+        mac-pxe: 70:e2:84:14:0a:12
+        ipv4-pxe: 192.168.3.104
+        architecture: ppc64
+        chassis-part-number: 8335-GTB
+        chassis-serial-number: 1004C9A
+        external-addr: 9.3.3.3
+        interconnect-addr: 10.0.0.2
+        mac-eth10: 98:be:94:59:fd:d4
+        mac-eth11: 98:be:94:59:fd:d5
+
+    parameter:
+    -   hostname: min-3
+        powerai-frameworks:
+        - tensorflow
+        userid-ipmi: ADMIN
+        password-ipmi: admin
+        port-ipmi: 11
+        port-pxe: 12
+        port-eth10: 7
+        port-eth11: 8
+        mac-ipmi: 70:e2:84:14:01:df
+        ipv4-ipmi: 192.168.3.105
+        rack-id: rack1
+        template: parameter
+        mac-pxe: 98:be:94:59:fb:12
+        ipv4-pxe: 192.168.3.106
+        architecture: ppc64
+        chassis-part-number: 8335-GTB
+        chassis-serial-number: '0000000000000000'
+        external-addr: 9.3.3.4
+        interconnect-addr: 10.0.0.3
+        mac-eth10: 98:be:94:59:fb:10
+        mac-eth11: 98:be:94:59:fb:11
+switches:
+    switches:
+        mgmt:
+        -   hostname: mgmtswitch1
+            ipv4-addr: 192.168.3.5
+            rack-id: rack1
+            userid: admin
+            password: admin
+        data:
+        -   hostname: dataswitch1
+            ipv4-addr: 9.3.3.178
+            rack-id: rack1
+            userid: admin
+            password: admin

@@ -11,17 +11,25 @@
   gather_facts: yes
 
 - name: Install cuda
-  hosts: deeplearning
+  hosts: all 
   tasks:
     - include: tasks/install_nvidia.yml
   become: true
 
 
 - name: Install Frameworks 
-  hosts: deeplearning
+  hosts: all
   tasks:
     - name: Framework Install 
       include: framework_install.yml
   become: true
+
+- name: Tensorflow Sample Install
+  hosts: all
+  tasks:
+    - name: Tensorflow samples
+      include: tensor_dist_install.yml
+  become: true
+
 
 

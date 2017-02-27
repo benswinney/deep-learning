@@ -1,0 +1,12 @@
+---
+#- name: Dump all vars
+#  template:
+#    src: "{{ playbook_dir }}/templates/dumpall.j2"
+#    dest: /tmp/ansible.all
+
+- name: Generate Distributed Drivers
+  template:
+    src: "{{ playbook_dir }}/templates/dist_driver.j2"
+    dest: "/opt/DL/tensorflow/samples/dist_driver.sh"
+    mode: 0777
+...

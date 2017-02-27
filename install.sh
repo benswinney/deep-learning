@@ -7,6 +7,8 @@ GENESIS_FULL=$(pwd)/$GENESIS_LOCAL
 
 POWERAI_HOME=$(pwd)
 
+PACKAGE_DIR="playbooks/packages"
+
 DKMS_LOCATION="http://mirrors.kernel.org/ubuntu/pool/main/d/dkms/dkms_2.2.0.3-2ubuntu11_all.deb"
 DKMS_FILE=${PACKAGE_DIR}/dkms.deb
 
@@ -18,14 +20,14 @@ CUDNN5_DEV_REMOTE="/home/dllehr/dist_debs/libcudnn5-dev_5.1.5-1+cuda8.0_ppc64el.
 CUDNN5_FILE=${PACKAGE_DIR}/cudnn5.deb
 CUDNN5_DEV_FILE=${PACKAGE_DIR}/cudnn5_dev.deb
 
-MLDL_REPO="https://download.boulder.ibm.com/ibmdl/pub/software/server/mldl/mldl-repo-local_1-3ibm5_ppc64el.deb"
+MLDL_REPO="https://download.boulder.ibm.com/ibmdl/pub/software/server/mldl/mldl-repo-local_1-3ibm7_ppc64el.deb"
 MLDL_FILE=${PACKAGE_DIR}/mldl.deb
 
 PACKAGE_DIR="playbooks/packages"
 
 DYNAMIC_INVENTORY=$GENESIS_FULL/"scripts/python/yggdrasil/inventory.py"
 
-ACTIVATE_FILE=".accel-activate"
+ACTIVATE_FILE=".activate"
 
 #sudo apt-get install aptitude
 

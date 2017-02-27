@@ -1,0 +1,28 @@
+#!/bin/bash
+source /opt/DL/tensorflow/bin/tensorflow-activate
+python {{ reference_architecture['powerai_playbook']['mnist_test_dest'] }}
+{%- if groups['parameter'] %}
+ --ps_hosts=
+{%- for host_name in groups['parameter'] %}
+{{ host_name }}:2222
+{%- if groups['parameter']|length -1 != groups['parameter'].index(host_name) %}
+,
+{%- endif %}
+{%- endfor %}
+{%- endif %}
+{%- if groups['worker'] %}
+ --worker_hosts=
+{%- for host_name in groups['worker'] %}
+{{ host_name }}:2222
+{%- if groups['worker']|length -1 != groups['worker'].index(host_name) %}
+,
+{%- endif %}
+{%- endfor %}
+{%- endif %}
+{% if inventory_hostname in groups['worker'] %}
+ --job_name=worker --task_index={{ groups['worker'].index(inventory_hostname) }}
+{% elif inventory_hostname in groups['parameter'] %}
+ --job_name=ps --task_index={{ groups['parameter'].index(inventory_hostname) }}
+{% endif %}
+
+
