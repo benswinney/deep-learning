@@ -23,6 +23,8 @@ reference-architecture:
     powerai_playbook:
         description: Playbook for installing Power machine learning frameworks
         mldl_deb: "packages/mldl.deb"
+        samples_src: "static/tensorflow/distributed/samples"
+        samples_dest: "/opt/DL/tensorflow/samples"
 
 ipaddr-mgmt-network: 192.168.3.0/24
 ipaddr-mgmt-switch:
@@ -63,6 +65,8 @@ node-templates:
         hostname: worker
         userid-ipmi: ADMIN
         password-ipmi: admin
+        powerai-frameworks:
+        - tensorflow
         cobbler-profile: ubuntu-16.04.1-server-ppc64el
         os-disk: 
             - /dev/sdj
@@ -96,6 +100,8 @@ node-templates:
         hostname: parm
         userid-ipmi: ADMIN
         password-ipmi: admin
+        powerai-frameworks:
+        - tensorflow
         cobbler-profile: ubuntu-16.04.1-server-ppc64el
         os-disk: 
             - /dev/sdj

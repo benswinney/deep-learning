@@ -65,7 +65,7 @@ def main(_):
       y = tf.nn.softmax(tf.nn.xw_plus_b(hid, sm_w, sm_b))
       loss = -tf.reduce_sum(y_ * tf.log(tf.clip_by_value(y, 1e-10, 1.0)))
 
-      global_step = tf.Variable(0)
+      global_step = tf.contrib.framework.get_or_create_global_step()
 
       train_op = tf.train.AdagradOptimizer(0.01).minimize(
           loss, global_step=global_step)
@@ -77,7 +77,7 @@ def main(_):
 #      tf.scalar_summary("accuracy", accuracy)
 
       saver = tf.train.Saver()
-      summary_op = tf.merge_all_summaries()
+      summary_op = tf.summary.merge_all()
       init_op = tf.initialize_all_variables()
 
 

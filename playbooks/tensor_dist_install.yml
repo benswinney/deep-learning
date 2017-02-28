@@ -20,10 +20,10 @@
 - name: ensure tensorflow samples dir exists 
   file: path=/opt/DL/tensorflow/samples state=directory
 
-- name: copy mnist master file
+- name: copy samples directory
   copy: 
-    src: "{{ reference_architecture['powerai_playbook']['mnist_test_src'] }}"
-    dest: "{{ reference_architecture['powerai_playbook']['mnist_test_dest'] }}"
+    src: "{{ reference_architecture['powerai_playbook']['samples_src'] }}"
+    dest: "{{ reference_architecture['powerai_playbook']['samples_dest'] }}"
     mode: 0777
 
 - name: tensorflow

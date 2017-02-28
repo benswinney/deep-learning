@@ -1,6 +1,10 @@
 #!/bin/bash
+#The main driver for distributed tensorflow.  It will facilitate the 
+#usage of --ps_hosts, --worker_hosts, --task_index, and --job_name
+TRAIN_MODEL=$1
+
 source /opt/DL/tensorflow/bin/tensorflow-activate
-python {{ reference_architecture['powerai_playbook']['mnist_test_dest'] }}
+python $TRAIN_MODEL
 {%- if groups['parameter'] %}
  --ps_hosts=
 {%- for host_name in groups['parameter'] %}
