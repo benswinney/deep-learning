@@ -1,7 +1,7 @@
 ---
 # Copyright 2016, IBM US, Inc.
 #
-#gpudb tasks:  
+#Install Nvidia digits 
 #
 - name: Install digits 
   shell: apt-get install -y digits

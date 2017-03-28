@@ -1,7 +1,7 @@
 ---
-# Copyright 2016, IBM US, Inc.
+# Copyright 2017, IBM US, Inc.
 #
-#gpudb tasks:  
+#Install Nvidia version of caffe:  
 #
 - name: Install caffe-nv 
   shell: apt-get install -y caffe-nv 

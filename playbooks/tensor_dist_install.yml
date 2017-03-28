@@ -1,18 +1,7 @@
 ---
 # Copyright 2016, IBM US, Inc.
 #
-#gpudb playbook:  Install latest nvidia driver for gpudb.
-# eventually there will be more involved steps, however,
-# for gpudb's initial purposes, they just need a local
-# install of the latest nvidia kernel drivers.
-#
-#- name: Including caffe-nv playbook 
-#  include: caffe-nv_install.yml
-#  when: (framework == 'caffe-nv')
-#  become: true
-#- name: Install openBlas driver
-#  include: tasks/install_openblas.yml
-#  when: "{{ 'caffe-nv' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+#tensor_dist_install:
 
 #- name: Install ccl driver
 #  include: tasks/install_ccl.yml
@@ -26,6 +15,29 @@
     dest: "{{ reference_architecture['powerai_playbook']['samples_dest'] }}"
     mode: 0777
 
+- name: install git
+  shell: apt-get install -y git
+
+- name: copy models repo to tensorflow samples
+  git:
+    repo: "{{ reference_architecture['powerai_playbook']['models_tree'] }}"
+    dest: "{{ reference_architecture['powerai_playbook']['samples_dest'] }}/models"
+
 - name: tensorflow
   include: tasks/create_dist_driver.yml
   become: true
+
+- name: install openjdk for bazel build
+  shell: apt-get install openjdk-8-jdk
+
+- name: add tensorflow-activate to .profile
+  lineinfile:
+    dest: "/home/{{ userid_default }}/.profile"
+    line: "source /opt/DL/tensorflow/bin/tensorflow-activate"
+    insertafter: EOF
+
+- name: add bazel-activate to .profile
+  lineinfile:
+    dest: "/home/{{ userid_default }}/.profile"
+    line: "source /opt/DL/bazel/bin/bazel-activate"
+    insertafter: EOF

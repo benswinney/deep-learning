@@ -1,8 +1,8 @@
-
+set -e
 GENESIS_REMOTE="https://github.com/open-power-ref-design/cluster-genesis.git"
 GENESIS_LOCAL="cluster-genesis"
-GENESIS_COMMIT="607c6fab16822ed32cf3dc92e1781ac9faec50cb" #release v1.0
-GENESIS_VERSION="1.0"
+GENESIS_COMMIT="2328a7c427f99bedca8f035c13b0525c5318d8df" #release v1.1
+GENESIS_VERSION="1.1"
 GENESIS_FULL=$(pwd)/$GENESIS_LOCAL
 
 POWERAI_HOME=$(pwd)
@@ -15,8 +15,8 @@ DKMS_FILE=${PACKAGE_DIR}/dkms.deb
 CUDA_REPO="https://developer.nvidia.com/compute/cuda/8.0/prod/local_installers/cuda-repo-ubuntu1604-8-0-local_8.0.44-1_ppc64el-deb"
 CUDA_FILE=${PACKAGE_DIR}/cuda8.deb
 
-CUDNN5_REMOTE="/home/dllehr/dist_debs/libcudnn5_5.1.5-1+cuda8.0_ppc64el.deb"
-CUDNN5_DEV_REMOTE="/home/dllehr/dist_debs/libcudnn5-dev_5.1.5-1+cuda8.0_ppc64el.deb"
+CUDNN5_REMOTE="~/dist_debs/libcudnn5_5.1.5-1+cuda8.0_ppc64el.deb"
+CUDNN5_DEV_REMOTE="~/dist_debs/libcudnn5-dev_5.1.5-1+cuda8.0_ppc64el.deb"
 CUDNN5_FILE=${PACKAGE_DIR}/cudnn5.deb
 CUDNN5_DEV_FILE=${PACKAGE_DIR}/cudnn5_dev.deb
 

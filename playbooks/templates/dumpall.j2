@@ -1,40 +1,23 @@
 Module Variables ("vars"):
 --------------------------------
-{{ vars | to_nice_json }} 
+{{ vars  }} 
 
 Environment Variables ("environment"):
 --------------------------------
-{{ environment | to_nice_json }} 
+{{ environment  }} 
 
 GROUP NAMES Variables ("group_names"):
 --------------------------------
-{{ group_names | to_nice_json }}
-
-{% if 'parameter' in group_names %}
-EUREKA!!!!
-{% endif %}
+{{ group_names  }}
 
 GROUPS Variables ("groups"):
 --------------------------------
-{{ groups | to_nice_json }}
+{{ groups  }}
 
-python {{ reference_architecture['powerai_playbook']['mnist_test_dest'] }}  
-{%- if groups['parameter'] %}
- --ps-hosts=
+HOSTVARS
+----------------
+{{ hostvars  }} 
+
 {%- for host_name in groups['parameter'] %}
-{{ host_name }}:2222,
-{%- endfor %}
-{% endif %}
-
-{% if groups['worker'] %}
- --worker_hosts=
-{%- for host_name in groups['worker'] %}
-{{ host_name }}:2222,
-{%- endfor %}
-{% endif %}
-
-{% if inventory_hostname in groups['worker'] %}
---job_name=worker --task_index={{ groups['worker'].index(inventory_hostname) }}
-{% elif inventory_hostname in groups['parameter'] %}
---job_name=ps --task_index={{ groups['parameter'].index(inventory_hostname) }}
-{% endif %}
+{{ hostvars[host_name]['interconnect_addr'] }}:2222
+{% endfor %}

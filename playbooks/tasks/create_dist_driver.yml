@@ -9,4 +9,19 @@
     src: "{{ playbook_dir }}/templates/dist_driver.j2"
     dest: "/opt/DL/tensorflow/samples/dist_driver.sh"
     mode: 0777
+- name: Generate Distributed Drivers Interconnect
+  template:
+    src: "{{ playbook_dir }}/templates/dist_driver_intercon.j2"
+    dest: "/opt/DL/tensorflow/samples/dist_driver_intercon.sh"
+    mode: 0777
+- name: Generate Distributed Drivers Infiniband
+  template:
+    src: "{{ playbook_dir }}/templates/dist_driver_infiniband.j2"
+    dest: "/opt/DL/tensorflow/samples/dist_driver_infiniband.sh"
+    mode: 0777
+- name: Generate Inception Drivers
+  template:
+    src: "{{ playbook_dir }}/templates/inception_dist.j2"
+    dest: "/opt/DL/tensorflow/samples/inception_dist.sh"
+    mode: 0777
 ...

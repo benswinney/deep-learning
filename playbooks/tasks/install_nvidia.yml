@@ -1,23 +1,23 @@
 ---
-# Copyright 2016, IBM US, Inc.
+# Copyright 2017, IBM US, Inc.
 #
-#gpudb tasks:  
+# Install Cuda, cudnn, and their dependencies 
 #
 
 - name: Copy cuda8 library to target machines
-  copy: src="{{ reference_architecture['gpudb_nvidia_playbook']['cuda_deb'] }}" dest="/tmp/nvidia.deb"
+  copy: src="{{ reference_architecture['nvidia_playbook']['cuda_deb'] }}" dest="/tmp/nvidia.deb"
 
 - name: Copy cudnn5 library to target machines
-  copy: src="{{ reference_architecture['gpudb_nvidia_playbook']['cudnn5_deb'] }}" dest="/tmp/cudnn5.deb"
+  copy: src="{{ reference_architecture['nvidia_playbook']['cudnn5_deb'] }}" dest="/tmp/cudnn5.deb"
 
 - name: Copy cudnn5 dev library to target machines
-  copy: src="{{ reference_architecture['gpudb_nvidia_playbook']['cudnn5_dev_deb'] }}" dest="/tmp/cudnn5_dev.deb"
+  copy: src="{{ reference_architecture['nvidia_playbook']['cudnn5_dev_deb'] }}" dest="/tmp/cudnn5_dev.deb"
 
 - name: install dkms prereqs
   shell: "apt-get install -y make build-essential dpkg-dev patch gcc kmod initramfs-tools"
 
 - name: Copy dkms deb
-  copy: src="{{ reference_architecture['gpudb_nvidia_playbook']['dkms_deb'] }}" dest="/tmp/dkms.deb"
+  copy: src="{{ reference_architecture['nvidia_playbook']['dkms_deb'] }}" dest="/tmp/dkms.deb"
 #- debug: msg=" RESULT is {{ reference_architecture['gpudb_nvidia_playbook']['description'] }}"
 
 # Use filename created in previous step and install.  This is the cuda repo
@@ -35,8 +35,8 @@
 - shell: apt-get update
   ignore_errors: yes
 
-#install nvidia kernel driver only, leave the rest of cuda alone.
-- name: install cuda driver
+#install entire cuda codebase
+- name: install cuda
   shell: "apt-get install --allow-unauthenticated -y cuda "
 
 # Install the cudnn5 libraries

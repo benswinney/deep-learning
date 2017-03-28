@@ -1,7 +1,7 @@
 ---
 # Copyright 2016, IBM US, Inc.
 #
-#gpudb tasks:  
+# Install Openblas and all of it's dependencies  
 #
 - name: Install openblas dependencies
   shell: apt-get install -y {{ item }}
