@@ -15,10 +15,12 @@ DKMS_FILE=${PACKAGE_DIR}/dkms.deb
 CUDA_REPO="https://developer.nvidia.com/compute/cuda/8.0/prod/local_installers/cuda-repo-ubuntu1604-8-0-local_8.0.44-1_ppc64el-deb"
 CUDA_FILE=${PACKAGE_DIR}/cuda8.deb
 
-CUDNN5_REMOTE="~/dist_debs/libcudnn5_5.1.5-1+cuda8.0_ppc64el.deb"
-CUDNN5_DEV_REMOTE="~/dist_debs/libcudnn5-dev_5.1.5-1+cuda8.0_ppc64el.deb"
+#CUDNN5_REMOTE="~/dist_debs/libcudnn5_5.1.5-1+cuda8.0_ppc64el.deb"
+#CUDNN5_DEV_REMOTE="~/dist_debs/libcudnn5-dev_5.1.5-1+cuda8.0_ppc64el.deb"
+
 CUDNN5_FILE=${PACKAGE_DIR}/cudnn5.deb
 CUDNN5_DEV_FILE=${PACKAGE_DIR}/cudnn5_dev.deb
+MLNX_OFED_FILE=${PACKAGE_DIR}/ofed.tgz
 
 MLDL_REPO="https://download.boulder.ibm.com/ibmdl/pub/software/server/mldl/mldl-repo-local_1-3ibm7_ppc64el.deb"
 MLDL_FILE=${PACKAGE_DIR}/mldl.deb
@@ -28,6 +30,21 @@ PACKAGE_DIR="playbooks/packages"
 DYNAMIC_INVENTORY=$GENESIS_FULL/"scripts/python/yggdrasil/inventory.py"
 
 ACTIVATE_FILE=".activate"
+
+if [ "X$CUDNN5" = "X" ] ; then
+echo '$CUDNN5_REMOTE is not set. Please point to the location of libcudnn deb file'
+exit 1
+fi
+
+if [ "X$CUDNN5_DEV" = "X" ] ; then
+echo '$CUDNN5_DEV_REMOTE is not set. Please point to the location of libcudnn-dev deb file'
+exit 1
+fi
+
+if [ "X$MLNX_OFED" = "X" ] ; then
+echo '$MLNX_OFED is not set. Please point to the location of the Mellanox OFED Package'
+exit 1
+fi
 
 #sudo apt-get install aptitude
 
@@ -66,9 +83,9 @@ else
 fi
 
 
-cp ${CUDNN5_REMOTE} ${CUDNN5_FILE}
-cp ${CUDNN5_DEV_REMOTE} ${CUDNN5_DEV_FILE}
-
+cp ${CUDNN5} ${CUDNN5_FILE}
+cp ${CUDNN5_DEV} ${CUDNN5_DEV_FILE}
+cp ${MLNX_FED} ${MLNX_OFED_FILE}
 
 #call cluster genesis install script
 cd ${GENESIS_LOCAL}
