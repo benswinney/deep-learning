@@ -1,0 +1,11 @@
+---
+
+- name: set client nfs directories
+  set_fact:
+     append_dir: "{ '{{ item }}': '{{ item  | regex_replace('.*(/.+)$', '\\1' ) }}' }"
+
+- name: append directories
+  set_fact:
+     directory: "{{ directory | combine( append_dir ) }}"
+
+...

@@ -1,0 +1,21 @@
+---
+# Copyright 2017, IBM US, Inc.
+#
+# Install and setup nfs server 
+#
+
+- name: install nfs packages
+  shell: "apt-get install -y rpcbind nfs-kernel-server"
+
+- name: Generate /etc/exports 
+  template:
+    src: "{{ playbook_dir }}/templates/etc_export.j2"
+    dest: "/tmp/exports"
+    mode: 0777
+
+#- name: export shares
+#  shell: "exportfs -ra"
+
+#- name: restart nfs kernel server
+#  shell: "service nfs-kernel-server restart"
+...

@@ -42,6 +42,13 @@ password-mgmt-switch: admin
 userid-data-switch: admin
 password-data-switch: admin
 
+nfs: 
+   nfs-network: interconnect
+   nfs-server: parameter
+   nfs-clients: worker
+   nfs-shares:
+        - /usr/local/data
+   
 networks:
     external:
         description: Organization site or external network
@@ -70,6 +77,8 @@ node-templates:
         password-ipmi: admin
         powerai-frameworks:
         - tensorflow
+        cobbler-profile: ubuntu-16.04.1-server-ppc64el
+        os-disk: 
         cobbler-profile: ubuntu-16.04.1-server-ppc64el
         os-disk: 
             - /dev/sdj

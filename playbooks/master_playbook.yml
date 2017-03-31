@@ -10,18 +10,35 @@
   hosts: localhost
   gather_facts: yes
 
-#- name: Install cuda
-#  hosts: all 
+#- name: dumpall
+#  hosts: parameter
 #  tasks:
-#    - include: tasks/install_nvidia.yml
-#  become: true
+#    - include: tasks/dumpall.yml
 
-#- name: Install Frameworks 
-#  hosts: all
-#  tasks:
-#    - name: Framework Install 
-#      include: framework_install.yml
-#  become: true
+- name: Create nfs Server
+  hosts: all
+  tasks:
+    - include: tasks/deploy_nfs_server.yml
+      when: "groups.{{ nfs.nfs_server }} is defined and inventory_hostname in groups.{{ nfs.nfs_server }}"
+
+- name: Create nfs Client 
+  hosts: all
+  tasks:
+    - include: tasks/deploy_nfs_client.yml
+      when: "groups.{{ nfs.nfs_clients }} is defined and inventory_hostname in groups.{{ nfs.nfs_clients }}"
+
+- name: Install cuda
+  hosts: all 
+  tasks:
+    - include: tasks/install_nvidia.yml
+  become: true
+
+- name: Install Frameworks 
+  hosts: all
+  tasks:
+    - name: Framework Install 
+      include: framework_install.yml
+  become: true
 
 - name: Tensorflow Sample Install
   hosts: all
@@ -30,5 +47,4 @@
       include: tensor_dist_install.yml
   become: true
 
-
-
+...
