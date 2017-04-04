@@ -13,9 +13,13 @@
     dest: "/tmp/exports"
     mode: 0777
 
-#- name: export shares
-#  shell: "exportfs -ra"
+- name: export shares
+  shell: "exportfs -ra"
 
-#- name: restart nfs kernel server
-#  shell: "service nfs-kernel-server restart"
+- name: restart nfs kernel server
+  shell: "service nfs-kernel-server restart"
+
+#TODO
+- name: Configure firewall to allow NFS
+  shell: "sudo ufw allow from xxxx to any port nfs"
 ...

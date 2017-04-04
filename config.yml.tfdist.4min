@@ -47,7 +47,7 @@ nfs:
    nfs-server: parameter
    nfs-clients: worker
    nfs-shares:
-        - /usr/local/data
+        - /data
    
 networks:
     external:
