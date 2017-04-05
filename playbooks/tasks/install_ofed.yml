@@ -1,0 +1,10 @@
+---
+- name: check if ofed Specified
+  
+- name: Copy ofed tarball to target systems 
+  unarchive: src="{{ reference_architecture['powerai_playbook']['ofed_driver'] }}" dest="/tmp/ofed"
+
+- name: install mlnx ofed driver
+  shell: " cd /tmp/ofed && ./mlnxofedinstall --force"
+
+...

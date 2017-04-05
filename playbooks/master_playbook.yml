@@ -27,18 +27,27 @@
     - include: tasks/deploy_nfs_client.yml
       when: "groups.{{ nfs.nfs_clients }} is defined and inventory_hostname in groups.{{ nfs.nfs_clients }}"
 
-- name: Install cuda
-  hosts: all 
-  tasks:
-    - include: tasks/install_nvidia.yml
-  become: true
-
-- name: Install Frameworks 
+- name: Install OFED drivers if needed
   hosts: all
   tasks:
-    - name: Framework Install 
-      include: framework_install.yml
-  become: true
+    - include: tasks/install_ofed.yml
+      when: 
+        - networks[item].type is defined and networks[item].type == 'ib'
+        - reference_architecture['powerai_playbook']['ofed_driver'] is defined
+      with_items: "{{ host_networks.keys() }}"
+
+#- name: Install cuda
+#  hosts: all 
+#  tasks:
+#    - include: tasks/install_nvidia.yml
+#  become: true
+
+#- name: Install Frameworks 
+#  hosts: all
+#  tasks:
+#    - name: Framework Install 
+#      include: framework_install.yml
+#  become: true
 
 - name: Tensorflow Sample Install
   hosts: all

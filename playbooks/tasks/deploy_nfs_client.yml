@@ -16,15 +16,20 @@
   include: append_dir.yml
   with_items: "{{ nfs.nfs_shares }}"
 
-- name: mount nfs
-  shell: "echo mount -t nfs {{ hostvars[groups[nfs.nfs_server][0]]['interconnect_addr'] }}:{{ item }}  >> /tmp/dump.out"
-  with_items: "{{ nfs.nfs_shares }}"
-
 - name: Setup fstab
   lineinfile:
-    dest: "/tmp/junk.out"
+    dest: "/etc/fstab"
     line: "{{ hostvars[groups[nfs.nfs_server][0]]['interconnect_addr'] }}:{{ item.key }} {{ item.value }} nfs auto 0 0"
     insertafter: EOF
+  with_dict: "{{ directory }}"
+
+- name: create mount directores
+  file: 
+    path: "{{ item.value }}"
+    state: directory
+    mode: 0755
+    owner: "{{ userid_default }}"
+    group: "{{ userid_default }}"
   with_dict: "{{ directory }}"
 
 - name: mount nfs

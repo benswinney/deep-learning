@@ -1,5 +1,5 @@
 ---
-# Copyright 2016 IBM Corp.
+# Copyright 2017 IBM Corp.
 #
 # All Rights Reserved.
 #
@@ -26,6 +26,7 @@ reference-architecture:
         mldl_deb: "packages/mldl.deb"
         samples_src: "static/tensorflow/distributed/samples"
         samples_dest: "/opt/DL/tensorflow/samples"
+        ofed_driver: "packages/ofed.tgz"
         additional_repos: 
             - https://github.com/tensorflow/models.git
 
@@ -65,6 +66,13 @@ networks:
         broadcast: 10.0.0.255
         method: static
         eth-port: eth11
+    infiniband:
+        description: Private IPoIB Network
+        type: ib
+        addr: 10.0.1.0/24
+        broadcast: 10.0.0.255
+        method: static
+        eth-port: ib0
     mgmt-pxe:
         description: Management Network
         method: dhcp
@@ -77,8 +85,6 @@ node-templates:
         password-ipmi: admin
         powerai-frameworks:
         - tensorflow
-        cobbler-profile: ubuntu-16.04.1-server-ppc64el
-        os-disk: 
         cobbler-profile: ubuntu-16.04.1-server-ppc64el
         os-disk: 
             - /dev/sdj
@@ -110,6 +116,7 @@ node-templates:
                     - 6
         networks:
             - external
+            - infiniband
             - interconnect
             - mgmt-pxe
     parameter:
@@ -141,5 +148,6 @@ node-templates:
                     - 8
         networks:
             - external
+            - infiniband
             - interconnect
             - mgmt-pxe
