@@ -1,6 +1,6 @@
 #execute deployer
 ACTIVATE_FILE=".activate"
-PLAYBOOK_LOC="playbooks/nvidia_driver.yml"
+PLAYBOOK_LOC="playbooks/master_playbook.yml"
 SETUP_ENV_LOC="scripts/setup-env"
 if [ ! -f $ACTIVATE_FILE ]; then
 	echo "ERROR: CAN'T FIND ACTIVATE FILE.  DID YOU RUN install.sh FIRST?"
