@@ -17,7 +17,7 @@ IBM's PowerAI documentation can be found at [ibm.biz/powerai](http://ibm.biz/pow
 ## Prerequisites
 Before proceeding to the installation steps, a few tasks need to be completed before hand.
 
-# Create Network Bridge
+### Create Network Bridge
 Create a network bridge named "br0" with port connected to management network (192.168.3.0/24).
 
 Below is an example interface defined in the local "/etc/network/interfaces" file. Note that "enP1p3s0f0" is the name of the interface connected to the management network.
@@ -28,7 +28,7 @@ Below is an example interface defined in the local "/etc/network/interfaces" fil
      - netmask 255.255.255.0
      - bridge_ports enP1p3s0f0
 
-# Download NVIDIA CuDNN (and optionally Mellanox OFED)
+### Download NVIDIA CuDNN
 PowerAI requires NVIDIA's CuDNN library. Visit [https://developer.nvidia.com/cudnn]([https://developer.nvidia.com/cudnn).
 - Login or register for NVIDIA's Accelerated Computing Developer Program.
 - Download the following .deb files
@@ -36,7 +36,7 @@ PowerAI requires NVIDIA's CuDNN library. Visit [https://developer.nvidia.com/cud
   - cuDNN v5.1 Developer Library for Ubuntu 16.04 Power8 (Deb)
 - Copy the .deb files to the management server and export the CUDNN5 and CUDNN environment variable pointing to the location of the .deb files.
 
-# Download Mellanox OFED
+### Download Mellanox OFED
 This solution has an option to use an available InfiniBand network. In order to automate the network configuration, the Mellanox OFED package is required. Visit [the Mellanox download site](http://www.mellanox.com/page/products_dyn?product_family=26&mtag=linux_sw_drivers)
 - Download the latest .tgz file for Ubuntu 16.04 ppc64le 
 - Copy the .tgz file to the management server and export the MLX_OFED environment variable pointing to the location of the .tgz file.
