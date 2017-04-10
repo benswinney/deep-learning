@@ -21,7 +21,8 @@
 - name: copy models repo to tensorflow samples
   git:
     repo: "{{ reference_architecture['powerai_playbook']['models_tree'] }}"
-    dest: "{{ reference_architecture['powerai_playbook']['samples_dest'] }}/models"
+    dest: "/data/models"
+  when: "groups.{{ nfs.nfs_server }} is defined and inventory_hostname in groups.{{ nfs.nfs_server }}"
 
 - name: tensorflow
   include: tasks/create_dist_driver.yml

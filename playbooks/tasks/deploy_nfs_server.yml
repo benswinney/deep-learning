@@ -7,15 +7,28 @@
 - name: install nfs packages
   shell: "apt-get install -y rpcbind nfs-kernel-server"
 
+- name: create mount directores
+  file: 
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: "{{ userid_default }}"
+    group: "{{ userid_default }}"
+  with_items: "{{ nfs.nfs_shares }}"
+
 - name: Generate /etc/exports 
   template:
     src: "{{ playbook_dir }}/templates/etc_export.j2"
-    dest: "/tmp/exports"
+    dest: "/etc/exports"
     mode: 0777
 
-#- name: export shares
-#  shell: "exportfs -ra"
+- name: export shares
+  shell: "exportfs -ra"
 
-#- name: restart nfs kernel server
-#  shell: "service nfs-kernel-server restart"
+- name: restart nfs kernel server
+  shell: "service nfs-kernel-server restart"
+
+#TODO
+#- name: Configure firewall to allow NFS
+#  shell: "sudo ufw allow from xxxx to any port nfs"
 ...

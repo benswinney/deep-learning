@@ -41,11 +41,6 @@ echo '$CUDNN5_DEV_REMOTE is not set. Please point to the location of libcudnn-de
 exit 1
 fi
 
-if [ "X$MLNX_OFED" = "X" ] ; then
-echo '$MLNX_OFED is not set. Please point to the location of the Mellanox OFED Package'
-exit 1
-fi
-
 #sudo apt-get install aptitude
 
 #pull cluster-genesis into project directory
@@ -85,7 +80,10 @@ fi
 
 cp ${CUDNN5} ${CUDNN5_FILE}
 cp ${CUDNN5_DEV} ${CUDNN5_DEV_FILE}
-cp ${MLNX_FED} ${MLNX_OFED_FILE}
+if [ "X$MLNX_OFED" != "X" ] ; then
+    cp ${MLNX_FED} ${MLNX_OFED_FILE}
+fi
+
 
 #call cluster genesis install script
 cd ${GENESIS_LOCAL}
