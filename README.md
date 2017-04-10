@@ -14,6 +14,33 @@ IBM's PowerAI documentation can be found at [ibm.biz/powerai](http://ibm.biz/pow
 [theano](http://deeplearning.net/software/theano/) Theano is a Python library that allows you to define, optimize, and evaluate mathematical expressions involving multi-dimensional arrays efficiently. Theano features:
 <br>
 
+## Prerequisites
+Before proceeding to the installation steps, a few tasks need to be completed before hand.
+
+# Create Network Bridge
+Create a network bridge named "br0" with port connected to management network (192.168.3.0/24).
+
+Below is an example interface defined in the local "/etc/network/interfaces" file. Note that "enP1p3s0f0" is the name of the interface connected to the management network.
+
+- auto br0
+- iface br0 inet static
+     - address 192.168.3.3
+     - netmask 255.255.255.0
+     - bridge_ports enP1p3s0f0
+
+# Download NVIDIA CuDNN (and optionally Mellanox OFED)
+PowerAI requires NVIDIA's CuDNN library. Visit [https://developer.nvidia.com/cudnn]([https://developer.nvidia.com/cudnn).
+- Login or register for NVIDIA's Accelerated Computing Developer Program.
+- Download the following .deb files
+  - cuDNN v5.1 Runtime Library for Ubuntu 16.04 Power8 (Deb)
+  - cuDNN v5.1 Developer Library for Ubuntu 16.04 Power8 (Deb)
+- Copy the .deb files to the management server and export the CUDNN5 and CUDNN environment variable pointing to the location of the .deb files.
+
+# Download Mellanox OFED
+This solution has an option to use an available InfiniBand network. In order to automate the network configuration, the Mellanox OFED package is required. Visit [the Mellanox download site](http://www.mellanox.com/page/products_dyn?product_family=26&mtag=linux_sw_drivers)
+- Download the latest .tgz file for Ubuntu 16.04 ppc64le 
+- Copy the .tgz file to the management server and export the MLX_OFED environment variable pointing to the location of the .tgz file.
+ 
 ## Basic Installation Instructions
 1. git clone https://github.ibm.com/dlehr/powerai_recipe
 2. Run `install.sh`
@@ -25,7 +52,7 @@ The first of many rack solutions designed to allow for ease of deploying a distr
 
 ###Configuration
 The PowerAI recipe can deploy distributed tensorflow across any possible combination of machines.  For sample purposes, we have provided a configuration with 3 nodes(1 Parameter Server, and 2 Workers) 
-`config.yml.tfdist.3min`
+`config.yml.tfdist.3min`. More information in the recipe document in the /documents folder.
 
 In every configuration, there are Parameter, and Worker nodes.  In here you can specify which machines are designated to which server type.  
 
