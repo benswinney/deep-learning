@@ -24,11 +24,13 @@ reference-architecture:
     powerai_playbook:
         description: Playbook for installing Power machine learning frameworks
         mldl_deb: "packages/mldl.deb"
+        powerai_frameworks:
+        - tensorflow
         samples_src: "static/tensorflow/distributed/samples"
         samples_dest: "/opt/DL/tensorflow/samples"
         ofed_driver: "packages/ofed.tgz"
-        additional_repos: 
-            - https://github.com/tensorflow/models.git
+        models_tree: "https://github.com/tensorflow/models.git"
+
 
 ipaddr-mgmt-network: 192.168.3.0/24
 ipaddr-mgmt-switch:
@@ -44,10 +46,10 @@ userid-data-switch: admin
 password-data-switch: admin
 
 nfs: 
-   nfs-network: interconnect
-   nfs-server: parameter
-   nfs-clients: worker
-   nfs-shares:
+   nfs_network: interconnect
+   nfs_server: parameter
+   nfs_clients: worker
+   nfs_shares:
         - /data
    
 networks:
@@ -83,15 +85,12 @@ node-templates:
         hostname: worker
         userid-ipmi: ADMIN
         password-ipmi: admin
-        powerai-frameworks:
-        - tensorflow
         cobbler-profile: ubuntu-16.04.1-server-ppc64el
         os-disk: 
             - /dev/sdj
             - /dev/sdi
         name-interfaces:
             mac-pxe: eth15
-            mac-eth10: eth10
             mac-eth11: eth11
         ports:
             ipmi:
@@ -123,16 +122,14 @@ node-templates:
         hostname: parm
         userid-ipmi: ADMIN
         password-ipmi: admin
-        powerai-frameworks:
-        - tensorflow
         cobbler-profile: ubuntu-16.04.1-server-ppc64el
         os-disk: 
             - /dev/sdj
             - /dev/sdi
         name-interfaces:
             mac-pxe: eth15
-            mac-eth10: eth10
             mac-eth11: eth11
+            mac-eth10: eth10
         ports:
             ipmi:
                 rack1:
@@ -140,12 +137,12 @@ node-templates:
             pxe:
                 rack1:
                     - 12
-            eth10:
-                rack1:
-                    - 7
             eth11:
                 rack1:
                     - 8
+            eth10:
+                rack1:
+                    - 7
         networks:
             - external
             - infiniband

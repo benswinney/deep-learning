@@ -1,10 +1,20 @@
 ---
-- name: check if ofed Specified
-  
+- name: add unzip package
+  apt:
+     name: unzip
+     update_cache: yes
+
+- name: create temp ofed directory
+  file:
+    path: /tmp/ofed
+    state: directory
+
 - name: Copy ofed tarball to target systems 
   unarchive: src="{{ reference_architecture['powerai_playbook']['ofed_driver'] }}" dest="/tmp/ofed"
 
 - name: install mlnx ofed driver
-  shell: " cd /tmp/ofed && ./mlnxofedinstall --force"
+  shell: " cd /tmp/ofed/* && ./mlnxofedinstall --force"
+#  shell: "echo yeah i installed"
+  notify: Reboot
 
 ...

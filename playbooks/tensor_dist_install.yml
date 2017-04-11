@@ -29,7 +29,7 @@
   become: true
 
 - name: install openjdk for bazel build
-  shell: apt-get install openjdk-8-jdk
+  shell: apt-get install -y openjdk-8-jdk
 
 - name: add tensorflow-activate to .profile
   lineinfile:

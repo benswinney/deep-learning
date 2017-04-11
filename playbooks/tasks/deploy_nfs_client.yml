@@ -16,23 +16,34 @@
   include: append_dir.yml
   with_items: "{{ nfs.nfs_shares }}"
 
-- name: Setup fstab
-  lineinfile:
-    dest: "/etc/fstab"
-    line: "{{ hostvars[groups[nfs.nfs_server][0]]['interconnect_addr'] }}:{{ item.key }} {{ item.value }} nfs auto 0 0"
-    insertafter: EOF
+#We want to ignore errors in case the server didn't come back up
+- name: Mount dir
+  mount:
+    name: "{{  item.value }}"
+    src: "{{ hostvars[groups[nfs.nfs_server][0]]['interconnect_addr'] }}:{{ item.key }}"
+    fstype: nfs4
+    opts: rw
+    state: mounted
   with_dict: "{{ directory }}"
+  ignore_errors: yes
 
-- name: create mount directores
-  file: 
-    path: "{{ item.value }}"
-    state: directory
-    mode: 0755
-    owner: "{{ userid_default }}"
-    group: "{{ userid_default }}"
-  with_dict: "{{ directory }}"
+#- name: Setup fstab
+#  lineinfile:
+#    dest: "/etc/fstab"
+#    line: "{{ hostvars[groups[nfs.nfs_server][0]]['interconnect_addr'] }}:{{ item.key }} {{ item.value }} nfs auto 0 0"
+#    insertafter: EOF
+#  with_dict: "{{ directory }}"
 
-- name: mount nfs
-  shell: "mount -t nfs {{ hostvars[groups[nfs.nfs_server][0]]['interconnect_addr'] }}:{{ item.key }} {{ item.value }}"
-  with_dict: "{{ directory }}"
+#- name: create mount directores
+#  file: 
+#    path: "{{ item.value }}"
+#    state: directory
+#    mode: 0755
+#    owner: "{{ userid_default }}"
+#    group: "{{ userid_default }}"
+#  with_dict: "{{ directory }}"
+#
+#- name: mount nfs
+#  shell: "mount -t nfs {{ hostvars[groups[nfs.nfs_server][0]]['interconnect_addr'] }}:{{ item.key }} {{ item.value }}"
+#  with_dict: "{{ directory }}"
 ...

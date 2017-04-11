@@ -22,7 +22,7 @@ CUDNN5_FILE=${PACKAGE_DIR}/cudnn5.deb
 CUDNN5_DEV_FILE=${PACKAGE_DIR}/cudnn5_dev.deb
 MLNX_OFED_FILE=${PACKAGE_DIR}/ofed.tgz
 
-MLDL_REPO="https://download.boulder.ibm.com/ibmdl/pub/software/server/mldl/mldl-repo-local_1-3ibm7_ppc64el.deb"
+MLDL_REPO="https://public.dhe.ibm.com/software/server/POWER/Linux/mldl/ubuntu/mldl-repo-local_3.4.1_ppc64el.deb"
 MLDL_FILE=${PACKAGE_DIR}/mldl.deb
 
 PACKAGE_DIR="playbooks/packages"
@@ -81,7 +81,7 @@ fi
 cp ${CUDNN5} ${CUDNN5_FILE}
 cp ${CUDNN5_DEV} ${CUDNN5_DEV_FILE}
 if [ "X$MLNX_OFED" != "X" ] ; then
-    cp ${MLNX_FED} ${MLNX_OFED_FILE}
+    cp ${MLNX_OFED} ${MLNX_OFED_FILE}
 fi
 
 

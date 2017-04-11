@@ -1,0 +1,32 @@
+#!/bin/bash
+#The main driver for distributed tensorflow.  It will facilitate the 
+#usage of --ps_hosts, --worker_hosts, --task_index, and --job_name
+TRAIN_MODEL=$1
+
+source /opt/DL/tensorflow/bin/tensorflow-activate
+python $TRAIN_MODEL
+{%- if groups['parameter'] %}
+ --ps_hosts=
+{%- for host_name in groups['parameter'] %}
+{{  hostvars[host_name]['interconnect_addr'] }}:2222
+{%- if groups['parameter']|length -1 != groups['parameter'].index(host_name) %}
+,
+{%- endif %}
+{%- endfor %}
+{%- endif %}
+{%- if groups['worker'] %}
+ --worker_hosts=
+{%- for host_name in groups['worker'] %}
+{{  hostvars[host_name]['interconnect_addr'] }}:2222
+{%- if groups['worker']|length -1 != groups['worker'].index(host_name) %}
+,
+{%- endif %}
+{%- endfor %}
+{%- endif %}
+{% if inventory_hostname in groups['worker'] %}
+ --job_name=worker --task_index={{ groups['worker'].index(inventory_hostname) }}
+{% elif inventory_hostname in groups['parameter'] %}
+ --job_name=ps --task_index={{ groups['parameter'].index(inventory_hostname) }}
+{% endif %}
+
+

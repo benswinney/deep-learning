@@ -28,35 +28,35 @@
 
 - name: caffe-nv
   include: tasks/install_caffe-nv.yml
-  when: "{{ 'caffe-nv' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+  when: "{{ 'caffe-nv' in reference_architecture['powerai_playbook']['powerai_frameworks'] }}"
   become: true
 
 - name: caffe-bvlc
   include: tasks/install_caffe-bvlc.yml
-  when: "{{ 'caffe-bvlc' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+  when: "{{ 'caffe-bvlc' in reference_architecture['powerai_playbook']['powerai_frameworks'] }}"
   become: true
 
 - name: caffe-ibm
   include: tasks/install_caffe-ibm.yml
-  when: "{{ 'caffe-ibm' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+  when: "{{ 'caffe-ibm' in reference_architecture['powerai_playbook']['powerai_frameworks'] }}"
   become: true
 
 - name: torch
   include: tasks/install_torch.yml
-  when: "{{ 'torch' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+  when: "{{ 'torch' in reference_architecture['powerai_playbook']['powerai_frameworks'] }}"
   become: true
 
 - name: theano
   include: tasks/install_theano.yml
-  when: "{{ 'theano' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+  when: "{{ 'theano' in reference_architecture['powerai_playbook']['powerai_frameworks'] }}"
   become: true
 
 - name: digits
   include: tasks/install_digits.yml
-  when: "{{ 'digits' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+  when: "{{ 'digits' in reference_architecture['powerai_playbook']['powerai_frameworks'] }}"
   become: true
 
 - name: tensorflow
   include: tasks/install_tensorflow.yml
-  when: "{{ 'tensorflow' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+  when: "{{ 'tensorflow' in reference_architecture['powerai_playbook']['powerai_frameworks'] }}"
   become: true

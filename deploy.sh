@@ -10,12 +10,10 @@ if [ -z "$1" ]; then
 	echo "ERROR: Please pass in config file"
         exit
 fi
-
+sudo echo "authenticate"
 source ${ACTIVATE_FILE}
 cp $1 ${GENESIS_FULL}/config.yml
 cd ${GENESIS_FULL}
-
-sed -i /sources.list/s/^/#/ os_images/config/ubuntu-16.04.1-server-ppc64el.seed
 
 source ${SETUP_ENV_LOC}
 cd playbooks
@@ -23,14 +21,21 @@ cd playbooks
 
 ansible-playbook -i hosts lxc-create.yml -K && ansible-playbook -i hosts install.yml -K
 
-# wait 20m minutes for install to complete.
-echo "Wait 20 minutes for install to complete"
-sleep 20m
-
+#cd ../../
+#ansible-playbook -i $DYNAMIC_INVENTORY playbooks/post_os_wait.yml
+#cd ${GENESIS_FULL}/playbooks
+echo "Wait 15 minutes"
+sleep 15m
 #Cluster Node Networking
 ansible-playbook -i $DYNAMIC_INVENTORY ssh_keyscan.yml
 ansible-playbook -i $DYNAMIC_INVENTORY gather_mac_addresses.yml
 ansible-playbook -i $DYNAMIC_INVENTORY configure_operating_systems.yml
+
+#exit cluster-genesis directory
+cd ../../
+
+ssh -i ~/.ssh/id_rsa_ansible-generated deployer@192.168.3.2 'sudo apt-get update && sudo apt-get install -y iptables'
+ssh -i ~/.ssh/id_rsa_ansible-generated deployer@192.168.3.2 'sudo bash -s' < nat.sh
 
 #call PowerAI playbook
 ansible-playbook -i $DYNAMIC_INVENTORY $PLAYBOOK_LOC
