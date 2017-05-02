@@ -1,22 +1,23 @@
 ---
-# Copyright 2016, IBM US, Inc.
+# Copyright 2017 IBM Corp.
 #
-#gpudb playbook:  Install latest nvidia driver for gpudb.
-# eventually there will be more involved steps, however,
-# for gpudb's initial purposes, they just need a local
-# install of the latest nvidia kernel drivers.
+# All Rights Reserved.
 #
-#- name: Including caffe-nv playbook 
-#  include: caffe-nv_install.yml
-#  when: (framework == 'caffe-nv')
-#  become: true
-#- name: Install openBlas driver
-#  include: tasks/install_openblas.yml
-#  when: "{{ 'caffe-nv' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
-
-#- name: Install ccl driver
-#  include: tasks/install_ccl.yml
-#  when: "{{ 'caffe-nv' in hostvars[inventory_hostname]['powerai_frameworks'] }}"
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# framework_install: Install Machine Learning frameworks listed in the 
+# 'powerai_playbook' entry for given config.yml file. 
+#
 - name: copy mldl repo
   copy: src="{{ reference_architecture['powerai_playbook']['mldl_deb'] }}" dest="/tmp/mldl.deb"
 
@@ -60,3 +61,4 @@
   include: tasks/install_tensorflow.yml
   when: "{{ 'tensorflow' in reference_architecture['powerai_playbook']['powerai_frameworks'] }}"
   become: true
+...
