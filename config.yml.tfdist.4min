@@ -26,9 +26,15 @@ reference-architecture:
         mldl_deb: "packages/mldl.deb"
         powerai_frameworks:
         - tensorflow
+#       - ibm-caffe
+#       - nv-caffe
+#       - bvlc-caffe
+#       - chainer
+#       - torch
+#       - theano
         samples_src: "static/tensorflow/distributed/samples"
         samples_dest: "/opt/DL/tensorflow/samples"
-        ofed_driver: "packages/ofed.tgz"
+#        ofed_driver: "packages/ofed.tgz"
         models_tree: "https://github.com/tensorflow/models.git"
 
 
@@ -68,13 +74,13 @@ networks:
         broadcast: 10.0.0.255
         method: static
         eth-port: eth11
-    infiniband:
-        description: Private IPoIB Network
-        type: ib
-        addr: 10.0.1.0/24
-        broadcast: 10.0.0.255
-        method: static
-        eth-port: ib0
+#    infiniband:
+#        description: Private IPoIB Network
+#        type: ib
+#        addr: 10.0.1.0/24
+#        broadcast: 10.0.0.255
+#        method: static
+#        eth-port: ib0
     mgmt-pxe:
         description: Management Network
         method: dhcp
@@ -115,7 +121,7 @@ node-templates:
                     - 6
         networks:
             - external
-            - infiniband
+#            - infiniband
             - interconnect
             - mgmt-pxe
     parameter:
@@ -145,6 +151,6 @@ node-templates:
                     - 7
         networks:
             - external
-            - infiniband
+#            - infiniband
             - interconnect
             - mgmt-pxe
