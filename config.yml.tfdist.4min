@@ -42,7 +42,7 @@ ipaddr-mgmt-network: 192.168.3.0/24
 ipaddr-mgmt-switch:
     rack1: 192.168.3.5
 ipaddr-data-switch:
-    rack1: 9.3.3.178
+    rack1: 192.168.3.6
 redundant-network: false
 userid-default: ubuntu
 password-default: passw0rd
@@ -59,17 +59,17 @@ nfs:
         - /data
    
 networks:
-    external:
-        description: Organization site or external network
-        addr: 9.3.3.0/24
-        broadcast: 9.3.3.255
-        gateway: 9.3.3.1
-        dns-nameservers: 9.3.1.200
-        dns-search: aus.stglabs.ibm.com
-        method: static
-        eth-port: eth10
+#    external:
+#        description: Organization site or external network
+#        addr: 1.2.3.0/24
+#        broadcast: 1.2.3.255
+#        gateway: 1.2.3.1
+#        dns-nameservers: 1.2.3.200
+#        dns-search: example.com
+#        method: static
+#        eth-port: eth10
     interconnect:
-        description: Private 10G Data Network to Interconnect Cluster
+        description: Private 10G Storage Network to Interconnect Cluster
         addr: 10.0.0.0/24
         broadcast: 10.0.0.255
         method: static
@@ -109,18 +109,18 @@ node-templates:
                     - 6
                     - 8
                     - 10
-            eth10:
-                rack1:
-                    - 1
-                    - 3
-                    - 5
+#            eth10:
+#                rack1:
+#                    - 1
+#                    - 3
+#                    - 5
             eth11:
                 rack1:
                     - 2
                     - 4
                     - 6
         networks:
-            - external
+#            - external
 #            - infiniband
             - interconnect
             - mgmt-pxe
@@ -146,11 +146,11 @@ node-templates:
             eth11:
                 rack1:
                     - 8
-            eth10:
-                rack1:
-                    - 7
+#            eth10:
+#                rack1:
+#                    - 7
         networks:
-            - external
+#            - external
 #            - infiniband
             - interconnect
             - mgmt-pxe
