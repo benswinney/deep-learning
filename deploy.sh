@@ -15,7 +15,7 @@
 # limitations under the License.
 ACTIVATE_FILE=".activate"
 PLAYBOOK_LOC="playbooks/master_playbook.yml"
-SETUP_ENV_LOC="scripts/setup-env"
+SETUP_ENV_LOC="deployenv/bin/activate"
 if [ ! -f $ACTIVATE_FILE ]; then
 	echo "ERROR: CAN'T FIND ACTIVATE FILE.  DID YOU RUN install.sh FIRST?"
         exit
@@ -26,6 +26,7 @@ if [ -z "$1" ]; then
 fi
 sudo echo "authenticate"
 source ${ACTIVATE_FILE}
+
 cp $1 ${GENESIS_FULL}/config.yml
 cd ${GENESIS_FULL}
 
@@ -33,7 +34,8 @@ source ${SETUP_ENV_LOC}
 cd playbooks
 #export ANSIBLE_HOST_KEY_CHECKING=
 
-ansible-playbook -i hosts lxc-create.yml -K && ansible-playbook -i hosts install.yml -K
+#ansible-playbook -i hosts lxc-create.yml -K && ansible-playbook -i hosts install.yml -K
+ansible-playbook -i hosts lxc-create.yml -K && ansible-playbook -i hosts install_1.yml && ansible-playbook -i hosts install_2.yml -K
 
 #cd ../../
 #ansible-playbook -i $DYNAMIC_INVENTORY playbooks/post_os_wait.yml

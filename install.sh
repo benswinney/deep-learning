@@ -17,8 +17,8 @@
 set -e
 GENESIS_REMOTE="https://github.com/open-power-ref-design/cluster-genesis.git"
 GENESIS_LOCAL="cluster-genesis"
-GENESIS_COMMIT="2328a7c427f99bedca8f035c13b0525c5318d8df" #release v1.1
-GENESIS_VERSION="1.1"
+GENESIS_COMMIT="582332e310170d1317edb5bf82b81d21b0628d4f"
+GENESIS_VERSION="1.2"
 GENESIS_FULL=$(pwd)/$GENESIS_LOCAL
 
 POWERAI_HOME=$(pwd)
@@ -60,10 +60,10 @@ fi
 #sudo apt-get install aptitude
 
 #pull cluster-genesis into project directory
-./scripts/setup_git_repo.sh "${GENESIS_REMOTE}" "${GENESIS_LOCAL}" "${GENESIS_COMMIT}"
+scripts/setup_git_repo.sh "${GENESIS_REMOTE}" "${GENESIS_LOCAL}" "${GENESIS_COMMIT}"
 
 #apply any patches to genesis.
-./scripts/patch_source.sh "${GENESIS_LOCAL}"
+scripts/patch_source.sh "${GENESIS_LOCAL}"
 
 #sed -i /sources.list/s/^/#/ ${GENESIS_LOCAL}/os_images/config/*.seed
 
