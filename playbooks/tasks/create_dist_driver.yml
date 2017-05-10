@@ -9,9 +9,11 @@
     src: "{{ playbook_dir }}/templates/dist_driver_intercon.j2"
     dest: "/opt/DL/tensorflow/samples/dist_driver_intercon.sh"
     mode: 0777
+  when: networks.interconnect is defined
 - name: Generate Distributed Drivers Infiniband
   template:
     src: "{{ playbook_dir }}/templates/dist_driver_infiniband.j2"
     dest: "/opt/DL/tensorflow/samples/dist_driver_infiniband.sh"
     mode: 0777
+  when: networks.infiniband is defined
 ...

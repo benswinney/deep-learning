@@ -28,6 +28,9 @@
   copy: src="{{ reference_architecture['nvidia_playbook']['cudnn5_dev_deb'] }}" dest="/tmp/cudnn5_dev.deb"
 
 - name: install dkms prereqs
+  shell: "apt-get update"
+
+- name: install dkms prereqs
   shell: "apt-get install -y make build-essential dpkg-dev patch gcc kmod initramfs-tools"
 
 - name: Copy dkms deb
