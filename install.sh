@@ -31,11 +31,9 @@ DKMS_FILE=${PACKAGE_DIR}/dkms.deb
 CUDA_REPO="https://developer.nvidia.com/compute/cuda/8.0/prod/local_installers/cuda-repo-ubuntu1604-8-0-local_8.0.44-1_ppc64el-deb"
 CUDA_FILE=${PACKAGE_DIR}/cuda8.deb
 
-#CUDNN5_REMOTE="~/dist_debs/libcudnn5_5.1.5-1+cuda8.0_ppc64el.deb"
-#CUDNN5_DEV_REMOTE="~/dist_debs/libcudnn5-dev_5.1.5-1+cuda8.0_ppc64el.deb"
-
 CUDNN5_FILE=${PACKAGE_DIR}/cudnn5.deb
 CUDNN5_DEV_FILE=${PACKAGE_DIR}/cudnn5_dev.deb
+
 MLNX_OFED_FILE=${PACKAGE_DIR}/ofed.tgz
 
 MLDL_REPO="https://public.dhe.ibm.com/software/server/POWER/Linux/mldl/ubuntu/mldl-repo-local_3.4.1_ppc64el.deb"
@@ -65,10 +63,7 @@ scripts/setup_git_repo.sh "${GENESIS_REMOTE}" "${GENESIS_LOCAL}" "${GENESIS_COMM
 #apply any patches to genesis.
 scripts/patch_source.sh "${GENESIS_LOCAL}"
 
-#sed -i /sources.list/s/^/#/ ${GENESIS_LOCAL}/os_images/config/*.seed
-
 mkdir -p ${PACKAGE_DIR}
-
 
 #Download Cuda Repo
 if [ ! -f ${CUDA_FILE} ];
@@ -93,20 +88,17 @@ else
 	echo "SKIPPING: mldl repo already downloaded"
 fi
 
-
 cp ${CUDNN5} ${CUDNN5_FILE}
 cp ${CUDNN5_DEV} ${CUDNN5_DEV_FILE}
 if [ "X$MLNX_OFED" != "X" ] ; then
     cp ${MLNX_OFED} ${MLNX_OFED_FILE}
 fi
 
-
 #call cluster genesis install script
 cd ${GENESIS_LOCAL}
 scripts/install.sh
 cd ..
-#export DYNAMIC_INVENTORY
-#echo "DYNAMIC " $DYNAMIC_INVENTORY
+
 #
 # Move variables to activate file to be sourced by deploy.sh
 # This allows us to not require the user to export the variables
