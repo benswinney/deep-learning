@@ -1,8 +1,9 @@
-# powerai_recipe
+# OpenPower Cluster for Deep Learning
 ##Introduction
 Front end to deploy any of the IBM PowerAI supported Deep Learning Frameworks across multiple target machines.
 
 IBM's PowerAI documentation can be found at [ibm.biz/powerai](http://ibm.biz/powerai)
+The PowerAI download page is at [here](https://public.dhe.ibm.com/software/server/POWER/Linux/mldl/ubuntu/)
 
 ##Supported Frameworks
 [caffe-bvlc](https://github.com/BVLC/caffe) Berkeley Vision and Learning Center caffe Framework <br>
@@ -20,7 +21,7 @@ Before proceeding to the installation steps, a few tasks need to be completed be
 ### Create Network Bridge
 Create a network bridge named "br0" with port connected to management network (192.168.3.0/24).
 
-Below is an example interface defined in the local "/etc/network/interfaces" file. Note that "enP1p3s0f0" is the name of the interface connected to the management network.
+Below is an example interface defined in the local "/etc/network/interfaces" file. Note that "enP1p3s0f0" is the name of the interface connected to the management network. Check the recipe documentation for more information on this step.
 
 - auto br0
 - iface br0 inet static
@@ -28,8 +29,8 @@ Below is an example interface defined in the local "/etc/network/interfaces" fil
      - netmask 255.255.255.0
      - bridge_ports enP1p3s0f0
 
-### Download NVIDIA CuDNN
-PowerAI requires NVIDIA's CuDNN library. Visit [https://developer.nvidia.com/cudnn]([https://developer.nvidia.com/cudnn).
+### Download NVIDIA CuDNN 5
+PowerAI requires NVIDIA's CuDNN library. Visit [https://developer.nvidia.com/cudnn]([https://developer.nvidia.com/cudnn). The current versions of the included frameworks are built using CuDNN 5.
 - Login or register for NVIDIA's Accelerated Computing Developer Program.
 - Download the following .deb files
   - cuDNN v5.1 Runtime Library for Ubuntu 16.04 Power8 (Deb)
@@ -41,14 +42,14 @@ This solution has an option to use an available InfiniBand network. In order to 
 - Download the latest .tgz file for Ubuntu 16.04 ppc64le 
 - Copy the .tgz file to the management server and export the MLX_OFED environment variable pointing to the location of the .tgz file.
  
-## Basic Installation Instructions
-1. git clone https://github.ibm.com/dlehr/powerai_recipe
+## Basic Installation Instructions after the hardware has been racked and cabled
+1. git clone https://github.com/open-power-ref-design/deep-learning
 2. Run `install.sh`
 3. Build/edit the config.yml file using one of the templates provided.
 4. Run `deploy.sh <desired config file>` to initiate deployment.
 
 ## Distributed Tensorflow
-The first of many rack solutions designed to allow for ease of deploying a distributed workload across many heteregenous nodes in a cluster.
+The first of many rack solutions designed to allow for ease of deploying a distributed workload across many heteregenous nodes in a cluster. This recipe can used to install a distributed training cluster for TensorFlow.
 
 ###Configuration
 The PowerAI recipe can deploy distributed tensorflow across any possible combination of machines.  For sample purposes, we have provided a configuration with 3 nodes(1 Parameter Server, and 2 Workers) 
