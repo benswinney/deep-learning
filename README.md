@@ -1,11 +1,11 @@
 # OpenPower Cluster for Deep Learning
-##Introduction
+## Introduction
 Front end to deploy any of the IBM PowerAI supported Deep Learning Frameworks across multiple target machines.
 
 IBM's PowerAI documentation can be found at [ibm.biz/powerai](http://ibm.biz/powerai)
 The PowerAI download page is at [here](https://public.dhe.ibm.com/software/server/POWER/Linux/mldl/ubuntu/)
 
-##Supported Frameworks
+## Supported Frameworks
 [caffe-bvlc](https://github.com/BVLC/caffe) Berkeley Vision and Learning Center caffe Framework <br>
 [caffe-nv](https://github.com/NVIDIA/caffe) Nvidia Fork of the BVLC version of caffe <br>
 [caffe-ibm]() IBM Version of the caffe framework. <br>
@@ -51,16 +51,16 @@ This solution has an option to use an available InfiniBand network. In order to 
 ## Distributed Tensorflow
 The first of many rack solutions designed to allow for ease of deploying a distributed workload across many heteregenous nodes in a cluster. This recipe can used to install a distributed training cluster for TensorFlow.
 
-###Configuration
+### Configuration
 The PowerAI recipe can deploy distributed tensorflow across any possible combination of machines.  For sample purposes, we have provided a configuration with 3 nodes(1 Parameter Server, and 2 Workers) 
 `config.yml.tfdist.3min`. More information in the recipe document in the /documents folder.
 
 In every configuration, there are Parameter, and Worker nodes.  In here you can specify which machines are designated to which server type.  
 
-###Installation
+### Installation
 The configuration sample above will ensure tensorflow, cuda, and cudnn are installed on each machine in the cluster.
 
-###Samples
+### Samples
 The Distributed Tensorflow config for the PowerAI recipe currently includes two sample training sets.  Cifar10, and mnist.
 All samples can be found in `/opt/DL/tensorflow/samples`
 
