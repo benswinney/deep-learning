@@ -48,9 +48,5 @@ ansible-playbook -i $DYNAMIC_INVENTORY configure_operating_systems.yml
 #exit cluster-genesis directory
 cd ../../
 
-#Open up cluster machine access to pull in external repos
-ssh -i ~/.ssh/id_rsa_ansible-generated deployer@192.168.3.2 'sudo apt-get update && sudo apt-get install -y iptables'
-ssh -i ~/.ssh/id_rsa_ansible-generated deployer@192.168.3.2 'sudo bash -s' < scripts/nat.sh
-
 #call PowerAI playbook
 ansible-playbook -i $DYNAMIC_INVENTORY $PLAYBOOK_LOC

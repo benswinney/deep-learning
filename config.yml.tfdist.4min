@@ -37,7 +37,7 @@ reference-architecture:
 #        ofed_driver: "packages/ofed.tgz"
         models_tree: "https://github.com/tensorflow/models.git"
 
-
+deployer-gateway: true
 ipaddr-mgmt-network: 192.168.3.0/24
 ipaddr-mgmt-switch:
     rack1: 192.168.3.5

@@ -17,8 +17,8 @@
 set -e
 GENESIS_REMOTE="https://github.com/open-power-ref-design/cluster-genesis.git"
 GENESIS_LOCAL="cluster-genesis"
-GENESIS_COMMIT="582332e310170d1317edb5bf82b81d21b0628d4f"
-GENESIS_VERSION="1.2"
+GENESIS_COMMIT="9bba99dd6dba8a49c96870d311bbbb400e8906f2"
+GENESIS_VERSION="1.3"
 GENESIS_FULL=$(pwd)/$GENESIS_LOCAL
 
 POWERAI_HOME=$(pwd)
@@ -41,7 +41,7 @@ MLDL_FILE=${PACKAGE_DIR}/mldl.deb
 
 PACKAGE_DIR="playbooks/packages"
 
-DYNAMIC_INVENTORY=$GENESIS_FULL/"scripts/python/yggdrasil/inventory.py"
+DYNAMIC_INVENTORY=$GENESIS_FULL/"playbooks/inventory.py"
 
 ACTIVATE_FILE=".activate"
 
