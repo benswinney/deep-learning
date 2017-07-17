@@ -45,13 +45,13 @@ DYNAMIC_INVENTORY=$GENESIS_FULL/"playbooks/inventory.py"
 
 ACTIVATE_FILE=".activate"
 
-if [ "X$CUDNN5" = "X" ] ; then
-echo '$CUDNN5_REMOTE is not set. Please point to the location of libcudnn deb file'
+if [ "X$CUDNN5_DEB" = "X" ] ; then
+echo '$CUDNN5_DEB is not set. Please point to the location of libcudnn deb file'
 exit 1
 fi
 
-if [ "X$CUDNN5_DEV" = "X" ] ; then
-echo '$CUDNN5_DEV_REMOTE is not set. Please point to the location of libcudnn-dev deb file'
+if [ "X$CUDNN5_DEV_DEB" = "X" ] ; then
+echo '$CUDNN5_DEV_DEB is not set. Please point to the location of libcudnn-dev deb file'
 exit 1
 fi
 
