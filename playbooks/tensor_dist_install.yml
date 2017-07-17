@@ -17,13 +17,13 @@
 #
 # tensor_dist_install: install necessary frameworks for distributed tensorflow
 # including pulling tensorflow models repository into nfs mount and adding
-# bazel/tensorflow activate scripts into .profile 
+# bazel/tensorflow activate scripts into .profile
 
-- name: ensure tensorflow samples dir exists 
+- name: ensure tensorflow samples dir exists
   file: path=/opt/DL/tensorflow/samples state=directory
 
 - name: copy samples directory
-  copy: 
+  copy:
     src: "{{ reference_architecture['powerai_playbook']['samples_src'] }}"
     dest: "{{ reference_architecture['powerai_playbook']['samples_dest'] }}"
     mode: 0777
