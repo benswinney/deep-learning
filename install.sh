@@ -36,7 +36,7 @@ CUDNN5_DEV_FILE=${PACKAGE_DIR}/cudnn5_dev.deb
 
 MLNX_OFED_FILE=${PACKAGE_DIR}/ofed.tgz
 
-MLDL_REPO="https://public.dhe.ibm.com/software/server/POWER/Linux/mldl/ubuntu/mldl-repo-local_3.4.1_ppc64el.deb"
+MLDL_REPO="https://public.dhe.ibm.com/software/server/POWER/Linux/mldl/ubuntu/mldl-repo-local_3.4.2_ppc64el.deb"
 MLDL_FILE=${PACKAGE_DIR}/mldl.deb
 
 PACKAGE_DIR="playbooks/packages"
